@@ -1,0 +1,186 @@
+<template>
+  <div class="container">
+    <div class="jumbotron">
+      <div class="cta">
+        <h1>
+          {{ this.translation[this.currentLang].ctaTitle }}
+          <br />
+          <span>{{ this.translation[this.currentLang].ctaSubTitle }}</span>
+        </h1>
+        <!-- <button>В магазин</button> -->
+      </div>
+      <img src="@/assets/images/jumbotron.png" />
+    </div>
+    <catalog
+      :products="products"
+      :currentLang="currentLang"
+      @addToCart="this.$emit('addToCart', $event)"
+    />
+    <section class="about">
+      <h3 class="subtitle">
+        {{ this.translation[this.currentLang].aboutTitle }}
+      </h3>
+      <div class="about-body">
+        <p>
+          {{ this.translation[this.currentLang].aboutBody }}
+        </p>
+        <img src="@/assets/images/about.jpg" alt="" />
+      </div>
+    </section>
+    <section class="why-us">
+      <h3 class="subtitle">
+        {{ this.translation[this.currentLang].whyUsTitle }}
+      </h3>
+      <div class="why-us-items">
+        <div class="why-us-item">
+          <img src="@/assets/images/factory.svg" alt="" />
+          <div class="why-us-desc">
+            {{ this.translation[this.currentLang].whyUsOneTitle }}<br />
+            <span>{{ this.translation[this.currentLang].whyUsOneDesc }}</span>
+          </div>
+        </div>
+
+        <div class="why-us-item">
+          <img src="@/assets/images/thumb.png" alt="" />
+          <div class="why-us-desc">
+            {{ this.translation[this.currentLang].whyUsTwoTitle }}<br />
+            <span>{{ this.translation[this.currentLang].whyUsTwoDesc }}</span>
+          </div>
+        </div>
+
+        <div class="why-us-item">
+          <img src="@/assets/images/cash.png" alt="" />
+          <div class="why-us-desc">
+            {{ this.translation[this.currentLang].whyUsThreeTitle }}<br />
+            <span>{{ this.translation[this.currentLang].whyUsThreeDesc }}</span>
+          </div>
+        </div>
+
+        <div class="why-us-item">
+          <img src="@/assets/images/flask.png" alt="" />
+          <div class="why-us-desc">
+            {{ this.translation[this.currentLang].whyUsFourTitle }}<br />
+            <span>{{ this.translation[this.currentLang].whyUsFourDesc }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+import Catalog from "./Catalog.vue";
+import { translationsArray } from "@/language/MainComponent.js";
+
+export default {
+  data() {
+    return {
+      translation: translationsArray,
+    };
+  },
+  props: ["products", "currentLang"],
+  emits: ["addToCart"],
+  components: { Catalog },
+  created() {},
+};
+</script>
+
+<style scoped>
+/* other */
+
+* {
+  padding: 0;
+  margin: 0;
+
+  --item-border: 1px solid rgb(187, 187, 187);
+  --grey-text: rgb(80, 80, 80);
+}
+
+section {
+  padding: 5em 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.subtitle {
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+  margin-bottom: 1.2em;
+  font-weight: 400;
+  font-size: 36px;
+  color: var(--grey-text);
+}
+
+/* jumbotron */
+
+.jumbotron {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding-top: 80px;
+}
+
+.jumbotron span {
+  font-size: 22px;
+  font-weight: 400;
+}
+/* about */
+
+.about-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  grid-gap: 3em;
+}
+
+.about-body > p {
+  line-height: 1.5em;
+}
+
+.about-body img {
+  max-height: 350px;
+}
+
+/* why us */
+
+.why-us-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 3em;
+}
+
+.why-us-item {
+  border: var(--item-border);
+  border-radius: 5px;
+  text-align: center;
+  padding: 30px;
+  background-color: #fff;
+}
+
+.why-us-item > img {
+  width: 80px;
+  height: 80px;
+  margin: 10px 0;
+}
+
+.why-us-desc {
+  font-weight: 600;
+  text-align: center;
+}
+
+.why-us-desc > span {
+  font-weight: 400;
+}
+
+/* media */
+
+@media (max-width: 1200px) {
+  .container {
+    width: 100%;
+  }
+}
+</style>
