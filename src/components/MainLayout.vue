@@ -20,7 +20,9 @@
   <transition name="component-fade" mode="out-in">
     <modal-window
       v-if="currentComponent === 'modal-window'"
+      :currentLang="currentLang"
       @home-btn="this.$emit('home-btn')"
+      @reset-quantity="this.$emit('reset-quantity')"
     ></modal-window>
   </transition>
 </template>
@@ -37,7 +39,13 @@ export default {
     ModalWindow,
   },
   props: ["products", "cart", "currentLang", "currentComponent"],
-  emits: ["clear-cart", "addToCart", "home-btn", "modal-window"],
+  emits: [
+    "clear-cart",
+    "addToCart",
+    "home-btn",
+    "modal-window",
+    "reset-quantity",
+  ],
   data() {
     return {};
   },

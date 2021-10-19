@@ -5,7 +5,7 @@
     </p>
     <li v-for="(product, index) in cart" :key="index">
       <div class="popup-item-section">
-        <img :src="product.image" />
+        <img :src="require('../assets/images/' + product.image)" />
       </div>
 
       <div class="popup-item-section">

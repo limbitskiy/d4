@@ -45,7 +45,7 @@
       <p class="footer-subtitle">
         {{ this.translation[this.currentLang].feedbackTitle }}
       </p>
-      <p>+38 (050) 475-52-13</p>
+      <p>+38 (050) 340-35-47</p>
       <p>+38 (050) 480-11-20</p>
       <p>office@himpost.com</p>
     </div>

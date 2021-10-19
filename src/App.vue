@@ -17,6 +17,7 @@
     @addToCart="addToCart"
     @home-btn="changeView('main-content')"
     @modal-window="changeView('modal-window')"
+    @reset-quantity="resetQuantity"
   />
 
   <footer-comp :currentLang="currentLang" />
@@ -26,7 +27,7 @@
 import Navbar from "@/components/Navbar.vue";
 import FooterComp from "@/components/FooterComp.vue";
 import MainLayout from "@/components/MainLayout.vue";
-import { products } from "@/Products.js";
+// import { products } from "@/Products.js";
 
 export default {
   name: "App",
@@ -37,7 +38,7 @@ export default {
   },
   data() {
     return {
-      products: products,
+      products: [],
       cart: [],
       currentLang: 0,
       currentComponent: "main-content",
@@ -71,6 +72,17 @@ export default {
     clearCart() {
       this.cart = [];
     },
+    resetQuantity() {
+      this.products.forEach((item) => {
+        item.quantity = 1;
+      });
+    },
+  },
+  async mounted() {
+    const res = await fetch("./products.json");
+    const data = await res.json();
+    this.products = data;
+    console.log(this.products);
   },
 };
 </script>

@@ -1,7 +1,11 @@
 <template>
   <div class="info-wrap">
     <div class="info-modal">
-      <thank-you @home-btn="this.$emit('home-btn')"></thank-you>
+      <thank-you
+        :currentLang="currentLang"
+        @home-btn="this.$emit('home-btn')"
+        @reset-quantity="this.$emit('reset-quantity')"
+      ></thank-you>
     </div>
   </div>
 </template>
@@ -13,7 +17,8 @@ export default {
     return {};
   },
   components: { ThankYou },
-  emits: ["home-btn"],
+  props: ["currentLang"],
+  emits: ["home-btn", "reset-quantity"],
   methods: {},
   computed: {},
 };

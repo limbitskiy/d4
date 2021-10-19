@@ -3,7 +3,7 @@
     <img class="logo" src="@/assets/images/logo.webp" />
     <div class="nav-btn-group">
       <i class="fa fa-mobile" aria-hidden="true"
-        ><span>+38 (050) 47-55-213</span></i
+        ><span>+38 (050) 340-35-47</span></i
       >
 
       <nav-btn :class="{ 'btn-orange': cart.length > 0 }" @click="openCart()">

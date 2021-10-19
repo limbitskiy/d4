@@ -1,18 +1,29 @@
 <template>
   <div class="ty-message">
     <p>
-      Спасибо за заказ. Ожидайте звонка от нашего менеджера в кратчайшие сроки.
+      {{ this.translation[this.currentLang].msg }}
     </p>
-    <gen-btn @click="this.homeBtn">На главную</gen-btn>
+    <gen-btn @click="this.homeBtn">{{
+      this.translation[this.currentLang].homeBtn
+    }}</gen-btn>
   </div>
 </template>
 
 <script>
+import { translationsArray } from "@/language/ThankYou.js";
+
 export default {
-  emits: ["home-btn"],
+  data() {
+    return {
+      translation: translationsArray,
+    };
+  },
+  emits: ["home-btn", "reset-quantity"],
+  props: ["currentLang"],
   methods: {
     homeBtn() {
       this.$emit("home-btn");
+      this.$emit("reset-quantity");
       this.cartOpen = false;
     },
   },
