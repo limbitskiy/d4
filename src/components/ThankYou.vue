@@ -18,12 +18,11 @@ export default {
       translation: translationsArray,
     };
   },
-  emits: ["home-btn", "reset-quantity"],
+  emits: ["home-btn"],
   props: ["currentLang"],
   methods: {
     homeBtn() {
       this.$emit("home-btn");
-      this.$emit("reset-quantity");
       this.cartOpen = false;
     },
   },

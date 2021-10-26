@@ -1,49 +1,56 @@
 <template>
   <div class="modal-wrap">
-    <div class="modal-window">
-      <h3 class="modal-title">
-        {{ this.translation[this.currentLang].callbackModalTitle }}
-      </h3>
-      <p>
-        {{ this.translation[this.currentLang].callbackModalSubTitle }}
-      </p>
+    <div class="container-small">
+      <div class="modal-window">
+        <h3 class="modal-title">
+          {{ this.translation[this.currentLang].callbackModalTitle }}
+        </h3>
+        <p>
+          {{ this.translation[this.currentLang].callbackModalSubTitle }}
+        </p>
 
-      <checkout-cart :cart="cart" :currentLang="currentLang"></checkout-cart>
+        <Cart
+          :cart="cart"
+          :currentLang="currentLang"
+          @removeFromCart="this.$emit('removeFromCart', $event)"
+          @changeQuantity="this.$emit('changeQuantity', $event)"
+        />
 
-      <form class="contact-form">
-        <div class="form-input-group">
-          <label for="name"
-            ><span class="asterisk">*</span>
-            {{ this.translation[this.currentLang].callbackModalName }}</label
-          >
-          <input v-model="name" type="text" name="name" />
-        </div>
+        <form class="contact-form">
+          <div class="form-input-group">
+            <label for="name"
+              ><span class="asterisk">*</span>
+              {{ this.translation[this.currentLang].callbackModalName }}</label
+            >
+            <input v-model="name" type="text" name="name" />
+          </div>
 
-        <div class="form-input-group">
-          <label for="tel"><span class="asterisk">*</span>Телефон:</label>
-          <input v-model="tel" type="tel" name="tel" />
-        </div>
+          <div class="form-input-group">
+            <label for="tel"><span class="asterisk">*</span>Телефон:</label>
+            <input v-model="tel" type="tel" name="tel" />
+          </div>
 
-        <div class="form-input-group">
-          <label for="comment">{{
-            this.translation[this.currentLang].callbackModalComment
-          }}</label>
-          <textarea v-model="comment" name="comment" rows="3" />
-        </div>
-        <gen-btn @click="sendData($event)">
-          {{ this.translation[this.currentLang].callbackModalBtn }}
-        </gen-btn>
-      </form>
+          <div class="form-input-group">
+            <label for="comment">{{
+              this.translation[this.currentLang].callbackModalComment
+            }}</label>
+            <textarea v-model="comment" name="comment" rows="3" />
+          </div>
+          <gen-btn @click.prevent="sendData()">
+            {{ this.translation[this.currentLang].callbackModalBtn }}
+          </gen-btn>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { translationsArray } from "@/language/CallbackForm.js";
-import CheckoutCart from "./CheckoutCart.vue";
+import Cart from "./Cart.vue";
 
 export default {
-  components: { CheckoutCart },
+  components: { Cart },
   data() {
     return {
       name: "",
@@ -53,22 +60,18 @@ export default {
     };
   },
   props: ["cart", "currentLang"],
-  emits: ["modal-window", "clear-cart"],
+  emits: ["modal-window", "clear-cart", "changeQuantity", "removeFromCart"],
   methods: {
-    sendData(e) {
-      e.preventDefault();
-
+    sendData() {
       const form = document.querySelector(".contact-form");
       const formData = new FormData(form);
       const cartNames = this.cart.map((item) => {
-        return `${item.name[0]}(x${item.quantity})`;
+        return `${item.name[0]} - ${item.select} - x${item.quantity}`;
       });
-      const cartString = cartNames.join("\n");
-      const cartData = cartString;
+      const cartData = cartNames.join("\n");
       formData.append("cartData", cartData);
       formData.append("total", this.total);
 
-      console.log(formData);
       fetch("mail.php", {
         method: "post",
         body: formData,
@@ -84,28 +87,29 @@ export default {
         });
       this.$emit("clear-cart");
       this.$emit("modal-window");
+      console.log(this.cart);
     },
   },
   computed: {
-    cartContents() {
-      let data = this.cart.map((product) => {
-        return product.name[0] + " - " + product.price;
-      });
-      let temp = data.join("\n");
-      console.log(temp);
-      console.log(typeof temp);
-      return temp;
-    },
+    // cartContents() {
+    //   let data = this.cart.map((product) => {
+    //     return product.name[0] + " - " + product.price;
+    //   });
+    //   let temp = data.join("\n");
+    //   console.log(temp);
+    //   console.log(typeof temp);
+    //   return temp;
+    // },
     total() {
       return this.cart.reduce((sum, item) => {
-        return (sum += item.price * item.quantity);
+        return (sum += item.price[item.select] * item.quantity);
       }, 0);
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 * {
   padding: 0;
   margin: 0;
@@ -114,12 +118,14 @@ export default {
   --background-color: #ececec;
 }
 
+.container-small {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 /* callback form */
 
 .modal-wrap {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas: ".... modal modal ...";
   padding-top: 80px;
   background-color: var(--background-color);
 }
@@ -137,11 +143,11 @@ export default {
   border-radius: 5px;
   box-shadow: var(--modal-shadow);
   color: var(--text-color);
-}
 
-.modal-window > p {
-  text-align: center;
-  line-height: 1.4em;
+  > p {
+    text-align: center;
+    line-height: 1.4em;
+  }
 }
 
 .modal-title {
@@ -162,21 +168,29 @@ export default {
 .contact-form {
   display: grid;
   grid-gap: 1.6em;
-}
 
-.contact-form textarea,
-.contact-form input {
-  background-color: var(--background-color);
-  border: none;
-  border-radius: 3px;
-  padding: 0.8em;
-  font-size: 18px;
-}
-.contact-form textarea:focus,
-.contact-form textarea:hover,
-.contact-form input:focus,
-.contact-form input:hover {
-  outline: none;
+  textarea,
+  input {
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 3px;
+    padding: 0.8em;
+    font-size: 18px;
+  }
+
+  textarea {
+    &:focus,
+    &:hover {
+      outline: none;
+    }
+  }
+
+  input {
+    &:focus,
+    &:hover {
+      outline: none;
+    }
+  }
 }
 
 /* other */
@@ -187,5 +201,21 @@ button {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+@media screen and (max-width: 800px) {
+  .container-small {
+    width: 100%;
+  }
+
+  .modal-window {
+    padding: 2em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .modal-window {
+    padding: 2em 10px !important;
+  }
 }
 </style>

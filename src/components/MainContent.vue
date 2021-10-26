@@ -7,9 +7,8 @@
           <br />
           <span>{{ this.translation[this.currentLang].ctaSubTitle }}</span>
         </h1>
-        <!-- <button>В магазин</button> -->
       </div>
-      <img src="@/assets/images/jumbotron.png" />
+      <img src="@/assets/images/jumbotron1.png" />
     </div>
     <catalog
       :products="products"
@@ -85,7 +84,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* other */
 
 * {
@@ -122,27 +121,37 @@ section {
   align-items: center;
   justify-items: center;
   padding-top: 80px;
+
+  span {
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  img {
+    max-height: 500px;
+  }
 }
 
-.jumbotron span {
-  font-size: 22px;
-  font-weight: 400;
+.cta {
+  width: 60%;
 }
+
 /* about */
 
 .about-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: center;
   justify-items: center;
   grid-gap: 3em;
-}
 
-.about-body > p {
-  line-height: 1.5em;
-}
+  > p {
+    line-height: 1.5em;
+  }
 
-.about-body img {
-  max-height: 350px;
+  img {
+    max-height: 350px;
+  }
 }
 
 /* why us */
@@ -151,6 +160,7 @@ section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 3em;
+  justify-content: center;
 }
 
 .why-us-item {
@@ -159,21 +169,21 @@ section {
   text-align: center;
   padding: 30px;
   background-color: #fff;
-}
 
-.why-us-item > img {
-  width: 80px;
-  height: 80px;
-  margin: 10px 0;
+  > img {
+    width: 80px;
+    height: 80px;
+    margin: 10px 0;
+  }
 }
 
 .why-us-desc {
   font-weight: 600;
   text-align: center;
-}
 
-.why-us-desc > span {
-  font-weight: 400;
+  > span {
+    font-weight: 400;
+  }
 }
 
 /* media */
@@ -181,6 +191,53 @@ section {
 @media (max-width: 1200px) {
   .container {
     width: 100%;
+  }
+
+  .why-us-items {
+    grid-template-columns: repeat(2, 300px);
+  }
+}
+
+@media (max-width: 1000px) {
+  .about-body {
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+    padding: 1em;
+
+    img {
+      object-fit: contain;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .jumbotron {
+    grid-template-columns: 1fr;
+    padding-top: 180px;
+    padding-bottom: 140px;
+
+    h1 {
+      font-size: 28px;
+    }
+
+    img {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 660px) {
+  .why-us-items {
+    grid-template-columns: 300px;
+  }
+
+  .cta {
+    width: 80%;
+  }
+
+  section {
+    padding: 2em 0;
   }
 }
 </style>

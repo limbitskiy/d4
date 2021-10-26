@@ -1,6 +1,6 @@
 export const translationsArray = [
     {
-        ctaTitle: "Полиуретановые клея от производителя",
+        ctaTitle: "Полиуретановые клеи от производителя",
         ctaSubTitle: "Низкие цены. Гарантия качества",
         aboutTitle: "О предприятии",
         aboutBody:
@@ -18,7 +18,7 @@ export const translationsArray = [
         whyUsFourDesc: "Мы осуществляем технологическое ведение клиента",
     },
     {
-        ctaTitle: "Поліуретанові клеї від нашого виробника",
+        ctaTitle: "Поліуретанові клеї від виробника",
         ctaSubTitle: "Низькі ціни. Гарантована якість",
         aboutTitle: "Про підприємство",
         aboutBody:

@@ -15,6 +15,8 @@
       @clear-cart="this.$emit('clear-cart')"
       @home-btn="this.$emit('home-btn')"
       @modal-window="this.$emit('modal-window')"
+      @removeFromCart="this.$emit('removeFromCart', $event)"
+      @changeQuantity="this.$emit('changeQuantity', $event)"
     />
   </transition>
   <transition name="component-fade" mode="out-in">
@@ -45,6 +47,8 @@ export default {
     "home-btn",
     "modal-window",
     "reset-quantity",
+    "changeQuantity",
+    "removeFromCart",
   ],
   data() {
     return {};

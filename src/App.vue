@@ -18,6 +18,8 @@
     @home-btn="changeView('main-content')"
     @modal-window="changeView('modal-window')"
     @reset-quantity="resetQuantity"
+    @removeFromCart="removeFromCart"
+    @changeQuantity="changeQuantity"
   />
 
   <footer-comp :currentLang="currentLang" />
@@ -27,7 +29,7 @@
 import Navbar from "@/components/Navbar.vue";
 import FooterComp from "@/components/FooterComp.vue";
 import MainLayout from "@/components/MainLayout.vue";
-// import { products } from "@/Products.js";
+import products from "@/products.json";
 
 export default {
   name: "App",
@@ -38,7 +40,7 @@ export default {
   },
   data() {
     return {
-      products: [],
+      products: products,
       cart: [],
       currentLang: 0,
       currentComponent: "main-content",
@@ -46,12 +48,12 @@ export default {
   },
   methods: {
     removeFromCart(product) {
+      this.cart.quantity = 1;
       this.cart.splice(this.cart.indexOf(product), 1);
     },
     addToCart(product) {
-      if (!this.cart.includes(product)) {
-        this.cart.push(product);
-      }
+      if (this.cart.includes(product)) return;
+      this.cart.push(product);
     },
     changeView(page) {
       this.cartIsOpen = false;
@@ -71,6 +73,10 @@ export default {
     },
     clearCart() {
       this.cart = [];
+      this.products.forEach((item) => {
+        item.quantity = 1;
+        item.select = Object.entries(item.price)[0][0];
+      });
     },
     resetQuantity() {
       this.products.forEach((item) => {
@@ -78,12 +84,15 @@ export default {
       });
     },
   },
-  async mounted() {
-    const res = await fetch("./products.json");
-    const data = await res.json();
-    this.products = data;
-    console.log(this.products);
+  mounted() {
+    // console.log(Object.entries(this.products[0].price)[0][0]);
   },
+  // async mounted() {
+  //   const res = await fetch("./products.json");
+  //   const data = await res.json();
+  //   this.products = data;
+  //   console.log(this.products);
+  // },
 };
 </script>
 
@@ -99,7 +108,12 @@ export default {
   --font-small: 0.9em;
   --font-big: 1.25em;
   --font-bigger: 1.3em;
-  --font-large: 2em;
+  --font-large: 1.8em;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 #app {
@@ -108,5 +122,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: rgb(80, 80, 80);
   font-size: 16px;
+  position: relative;
 }
 </style>

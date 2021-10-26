@@ -9,11 +9,33 @@
       >
         <img :src="require('../assets/images/' + product.image)" alt="" />
         <h3 class="product-name">{{ product.name[currentLang] }}</h3>
+        <div class="packing-wrap">
+          <span class="product-subtitle">{{
+            this.translation[this.currentLang].packing
+          }}</span>
+
+          <form>
+            <select v-model="product.select" class="select-packing">
+              <option v-for="(packing, index) in product.packing" :key="index">
+                {{ packing }}
+              </option>
+            </select>
+          </form>
+        </div>
         <div class="price-wrap">
           <span class="product-subtitle">{{
             this.translation[this.currentLang].price
           }}</span>
-          <span class="product-price">{{ product.price }}грн</span>
+          <span class="product-price"
+            >{{ product.price[product.select] }} грн</span
+          >
+        </div>
+        <div v-if="product.packing.length > 1" class="price-comment">
+          * {{ this.translation[this.currentLang].comment }}
+        </div>
+        <div v-if="product.packing.length === 1" class="price-comment">
+          * {{ this.translation[this.currentLang].otherComment }}
+          {{ product.price[product.select] / 11.1 }} грн
         </div>
         <div class="product-desc">
           <p class="product-subtitle">
@@ -26,7 +48,6 @@
         </gen-btn>
       </div>
     </div>
-    <!-- </div> -->
   </section>
 </template>
 
@@ -45,18 +66,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* other */
 * {
   padding: 0;
   margin: 0;
 
-  --arrow-color: rgb(120, 120, 120);
-  --arrow-hover: rgb(80, 80, 80);
-
+  --item-border: 1px solid rgb(187, 187, 187);
   --green-color: #27a92c;
-  --green-color-lighten: rgb(143, 143, 143);
-  --green-color-darken: rgb(38, 156, 42);
 }
 
 .subtitle {
@@ -78,40 +95,45 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 368px);
   grid-gap: 3em;
-  /* width: 150vw; */
+  justify-content: center;
   transition: transform 200ms ease-in-out;
 }
 
 .product-card {
   display: grid;
   grid-auto-flow: row;
-  grid-template-rows: 250px 1fr 1fr auto 2fr;
+  grid-template-rows: 250px 1fr 1fr 1fr auto 2fr;
+  grid-gap: 0.5em;
   align-items: center;
-  border: 1px solid #dfdfdf;
+  border: var(--item-border);
   border-radius: 5px;
-  padding: 0 1.2em;
+  padding: 1.2em;
   background-color: #fff;
   user-select: none;
   -moz-user-select: none;
-}
 
-.product-card img {
-  justify-self: center;
+  & img,
+  & button {
+    justify-self: center;
+  }
 }
 
 .product-name {
   font-weight: 600;
   color: var(--grey-text);
+  margin-bottom: 0.5em;
 }
 
 .product-subtitle {
   font-weight: 600;
 }
 
+.packing-wrap,
 .price-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px dotted #bebebe;
 }
 
 .product-price {
@@ -119,7 +141,27 @@ export default {
   color: var(--green-color);
 }
 
-.product-card button {
-  justify-self: center;
+.price-comment {
+  font-size: 14px;
+}
+
+.select-packing {
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+  .catalog {
+    grid-template-columns: repeat(2, 368px);
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .catalog {
+    grid-template-columns: 320px;
+  }
 }
 </style>
+
