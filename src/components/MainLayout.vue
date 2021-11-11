@@ -4,6 +4,7 @@ import CallbackForm from "@/components/CallbackForm.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import ModalPopup from "@/components/ModalPopup.vue";
 import Gallery from "@/components/Gallery.vue";
+import PropsTable from "@/components/PropsTable.vue";
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     ModalWindow,
     ModalPopup,
     Gallery,
+    PropsTable,
   },
   props: ["products", "cart", "currentLang", "currentComponent"],
   emits: [
@@ -27,6 +29,7 @@ export default {
     return {
       isModalVisible: false,
       modalGallery: "",
+      modalProps: "",
     };
   },
   methods: {
@@ -83,7 +86,9 @@ export default {
         <Gallery :modalGallery="modalGallery" />
       </template>
       <template v-slot:desc>{{ this.modalDesc }}</template>
-      <template v-slot:props>{{ this.modalProps }}</template>
+      <template v-slot:props>
+        <PropsTable :modalProps="modalProps" />
+      </template>
     </ModalPopup>
   </transition>
 </template>
@@ -99,25 +104,5 @@ export default {
 .component-fade-enter-from,
 .component-fade-leave-to {
   opacity: 0;
-}
-
-.gallery-thumbnails {
-  display: grid;
-  gap: 5px;
-  grid-auto-flow: column;
-}
-
-.gallery-inner {
-}
-
-.gallery-enlarged {
-  display: grid;
-  place-items: center;
-}
-
-.thumbnail {
-  width: 100%;
-  border: 1px solid rgb(221, 221, 221);
-  cursor: pointer;
 }
 </style>

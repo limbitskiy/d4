@@ -26,13 +26,12 @@ export default {
             @click="close"
             aria-label="Close modal"
           >
-            x
+            <i class="fas fa-times"></i>
           </button>
         </header>
 
         <div class="modal-body">
           <div class="gallery">
-            <!-- <slot name="big-img"></slot> -->
             <slot name="gallery"></slot>
           </div>
 
@@ -43,14 +42,6 @@ export default {
 
             <div class="props">
               <slot name="props">These are the default props </slot>
-              <button
-                type="button"
-                class="btn-green"
-                @click="close"
-                aria-label="Close modal"
-              >
-                Close me!
-              </button>
             </div>
           </div>
         </div>
@@ -67,19 +58,20 @@ export default {
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
 }
 
 .modal {
   background: #ffffff;
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
-  margin: 0 0.5em;
+  margin: 0 3em;
 }
 
 .modal-header {
+  font-size: 16px;
+  font-weight: 600;
   position: relative;
   display: flex;
   justify-content: center;
@@ -94,7 +86,7 @@ export default {
 .gallery,
 .desc,
 .props {
-  padding: 15px;
+  padding: 1em;
   display: flex;
 }
 
@@ -105,13 +97,11 @@ export default {
 }
 
 .props {
-  border-top: 1px solid #eeeeee;
   flex-direction: column;
 }
 
 .desc {
   position: relative;
-  padding: 20px 10px;
 }
 
 .btn-close {
@@ -123,8 +113,12 @@ export default {
   padding: 0 5px;
   cursor: pointer;
   font-weight: bold;
-  color: var(--accent-green);
+  padding: 3px 5px;
+  color: var(--grey-general);
   background: transparent;
+  &:hover {
+    color: black;
+  }
 }
 
 .btn-green {

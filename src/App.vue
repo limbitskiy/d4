@@ -105,6 +105,7 @@ export default {
 
   --accent-color: rgb(231, 162, 33);
   --accent-green: #27a92c;
+  --grey-general: #b7b7b7;
 
   --grey-border: 1px solid #d7d7d7;
 

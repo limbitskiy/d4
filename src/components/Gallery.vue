@@ -40,4 +40,20 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.gallery-thumbnails {
+  display: grid;
+  gap: 5px;
+  grid-auto-flow: column;
+}
+
+.gallery-enlarged {
+  display: grid;
+  place-items: center;
+}
+
+.thumbnail {
+  width: 100%;
+  border: 1px solid rgb(221, 221, 221);
+  cursor: pointer;
+}
 </style>
