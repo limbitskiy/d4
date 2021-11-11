@@ -39,6 +39,9 @@
           <gen-btn @click.prevent="sendData()">
             {{ this.translation[this.currentLang].callbackModalBtn }}
           </gen-btn>
+          <gen-btn-grey @click.prevent="this.$emit('home-btn')">
+            {{ this.translation[this.currentLang].callbackModalBtnBack }}
+          </gen-btn-grey>
         </form>
       </div>
     </div>
@@ -60,7 +63,13 @@ export default {
     };
   },
   props: ["cart", "currentLang"],
-  emits: ["modal-window", "clear-cart", "changeQuantity", "removeFromCart"],
+  emits: [
+    "modal-window",
+    "clear-cart",
+    "changeQuantity",
+    "removeFromCart",
+    "home-btn",
+  ],
   methods: {
     sendData() {
       const form = document.querySelector(".contact-form");

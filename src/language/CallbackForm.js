@@ -6,6 +6,7 @@ export const translationsArray = [
         callbackModalName: "Имя:",
         callbackModalComment: "Комментарий",
         callbackModalBtn: "Заказать",
+        callbackModalBtnBack: "Вернуться в магазин",
     },
     {
         callbackModalTitle: "Оформлення замовлення",
@@ -14,5 +15,6 @@ export const translationsArray = [
         callbackModalName: "Им'я:",
         callbackModalComment: "Коментар",
         callbackModalBtn: "Замовити",
+        callbackModalBtnBack: "Повернутись до магазину",
     },
 ]

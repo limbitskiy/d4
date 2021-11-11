@@ -1,3 +1,20 @@
+<script>
+import Catalog from "./Catalog.vue";
+import { translationsArray } from "@/language/MainComponent.js";
+
+export default {
+  data() {
+    return {
+      translation: translationsArray,
+    };
+  },
+  props: ["products", "currentLang"],
+  emits: ["addToCart", "openModalPopup"],
+  components: { Catalog },
+  created() {},
+};
+</script>
+
 <template>
   <div class="container">
     <div class="jumbotron">
@@ -14,6 +31,7 @@
       :products="products"
       :currentLang="currentLang"
       @addToCart="this.$emit('addToCart', $event)"
+      @openModalPopup="this.$emit('openModalPopup', $event)"
     />
     <section class="about">
       <h3 class="subtitle">
@@ -66,23 +84,6 @@
     </section>
   </div>
 </template>
-
-<script>
-import Catalog from "./Catalog.vue";
-import { translationsArray } from "@/language/MainComponent.js";
-
-export default {
-  data() {
-    return {
-      translation: translationsArray,
-    };
-  },
-  props: ["products", "currentLang"],
-  emits: ["addToCart"],
-  components: { Catalog },
-  created() {},
-};
-</script>
 
 <style lang="scss" scoped>
 /* other */

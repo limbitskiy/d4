@@ -95,7 +95,7 @@ export default {
   },
   watch: {
     cartLength() {
-      if (this.cartLength == 1 && !this.cartOpen) {
+      if (this.cartLength > 0 && !this.cartOpen) {
         this.cartOpen = true;
       }
       if (this.cartLength === 0) {

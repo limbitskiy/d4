@@ -19,7 +19,7 @@ export default {
 
 button {
   cursor: pointer;
-  z-index: 3;
+  /* z-index: 3; */
   padding: 1em 2em;
   border: none;
   border-radius: 3px;

@@ -1,3 +1,55 @@
+<script>
+import MainContent from "@/components/MainContent.vue";
+import CallbackForm from "@/components/CallbackForm.vue";
+import ModalWindow from "@/components/ModalWindow.vue";
+import ModalPopup from "@/components/ModalPopup.vue";
+
+export default {
+  components: {
+    MainContent,
+    CallbackForm,
+    ModalWindow,
+    ModalPopup,
+  },
+  props: ["products", "cart", "currentLang", "currentComponent"],
+  emits: [
+    "clear-cart",
+    "addToCart",
+    "home-btn",
+    "modal-window",
+    "reset-quantity",
+    "changeQuantity",
+    "removeFromCart",
+  ],
+  data() {
+    return {
+      isModalVisible: false,
+      enlargedPicture: "",
+      // modalName: "",
+      // modalHeader: "",
+      // modalBody: "",
+      // modalFooter: "",
+    };
+  },
+  methods: {
+    enlargeThumbnail(pic) {
+      this.enlargedPicture = pic;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    openModalPopup(prod) {
+      this.modalName = prod.name[this.currentLang];
+      this.modalGallery = prod.gallery;
+      this.enlargedPicture = this.modalGallery[0];
+      this.modalProps = prod.props;
+      this.modalDesc = prod.fullDesc;
+      this.isModalVisible = true;
+    },
+  },
+};
+</script>
+
 <template>
   <transition name="component-fade" mode="out-in">
     <main-content
@@ -5,6 +57,7 @@
       :products="products"
       :currentLang="currentLang"
       @addToCart="this.$emit('addToCart', $event)"
+      @openModalPopup="openModalPopup"
     />
   </transition>
   <transition name="component-fade" mode="out-in">
@@ -27,35 +80,34 @@
       @reset-quantity="this.$emit('reset-quantity')"
     ></modal-window>
   </transition>
+
+  <transition name="component-fade" mode="out-in">
+    <ModalPopup v-if="isModalVisible" @close="closeModal">
+      <template v-slot:name>{{ this.modalName }}</template>
+      <template v-slot:gallery>
+        <div class="gallery-enlarged">
+          <img :src="require('../assets/images/' + this.enlargedPicture)" />
+        </div>
+        <div class="gallery-thumbnails">
+          <div
+            v-for="(picture, index) in this.modalGallery"
+            :key="index"
+            class="gallery-inner"
+          >
+            <img
+              class="thumbnail"
+              :src="require('../assets/images/' + picture)"
+              alt=""
+              @click="enlargeThumbnail(picture)"
+            />
+          </div>
+        </div>
+      </template>
+      <template v-slot:desc>{{ this.modalDesc }}</template>
+      <template v-slot:props>{{ this.modalProps }}</template>
+    </ModalPopup>
+  </transition>
 </template>
-
-<script>
-import MainContent from "@/components/MainContent.vue";
-import CallbackForm from "@/components/CallbackForm.vue";
-import ModalWindow from "@/components/ModalWindow.vue";
-
-export default {
-  components: {
-    MainContent,
-    CallbackForm,
-    ModalWindow,
-  },
-  props: ["products", "cart", "currentLang", "currentComponent"],
-  emits: [
-    "clear-cart",
-    "addToCart",
-    "home-btn",
-    "modal-window",
-    "reset-quantity",
-    "changeQuantity",
-    "removeFromCart",
-  ],
-  data() {
-    return {};
-  },
-  methods: {},
-};
-</script>
 
 <style>
 /* transitions */
@@ -68,5 +120,25 @@ export default {
 .component-fade-enter-from,
 .component-fade-leave-to {
   opacity: 0;
+}
+
+.gallery-thumbnails {
+  display: grid;
+  gap: 5px;
+  grid-auto-flow: column;
+}
+
+.gallery-inner {
+}
+
+.gallery-enlarged {
+  display: grid;
+  place-items: center;
+}
+
+.thumbnail {
+  width: 100%;
+  border: 1px solid rgb(221, 221, 221);
+  cursor: pointer;
 }
 </style>

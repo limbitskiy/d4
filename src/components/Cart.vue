@@ -60,16 +60,7 @@ export default {
   },
   props: ["cart", "cartOpen", "currentLang"],
   emits: ["removeFromCart", "order", "changeQuantity"],
-  methods: {
-    // showCart() {
-    //   let cartPopup = document.querySelector(".popup-cart");
-    //   cartPopup.style.transform = "translateX(0)";
-    // },
-    // hideCart() {
-    //   let cartPopup = document.querySelector(".popup-cart");
-    //   cartPopup.style.transform = "translateX(500px)";
-    // },
-  },
+  methods: {},
   computed: {
     total() {
       return this.cart.reduce((sum, item) => {
@@ -80,15 +71,7 @@ export default {
       return this.cart.length;
     },
   },
-  watch: {
-    // cartOpen() {
-    //   if (this.cartOpen) {
-    //     this.showCart();
-    //   } else {
-    //     this.hideCart();
-    //   }
-    // },
-  },
+  watch: {},
 };
 </script>
 

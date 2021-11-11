@@ -1,14 +1,27 @@
+<script>
+import { translationsArray } from "@/language/Catalog.js";
+
+export default {
+  data() {
+    return {
+      translation: translationsArray,
+    };
+  },
+  props: ["products", "currentLang"],
+  emits: ["addToCart", "openModalPopup"],
+  methods: {},
+};
+</script>
+
 <template>
   <section class="product-catalog">
     <h3 class="subtitle">Каталог</h3>
     <div class="catalog">
-      <div
-        v-for="(product, index) in products"
-        :key="index"
-        class="product-card"
-      >
+      <div v-for="product in products" :key="product.id" class="product-card">
         <img :src="require('../assets/images/' + product.image)" alt="" />
-        <h3 class="product-name">{{ product.name[currentLang] }}</h3>
+        <h3 class="product-name" @click="this.$emit('openModalPopup', product)">
+          {{ product.name[currentLang] }}
+        </h3>
         <div class="packing-wrap">
           <span class="product-subtitle">{{
             this.translation[this.currentLang].packing
@@ -51,27 +64,9 @@
   </section>
 </template>
 
-<script>
-import { translationsArray } from "@/language/Catalog.js";
-
-export default {
-  data() {
-    return {
-      translation: translationsArray,
-    };
-  },
-  props: ["products", "currentLang"],
-  emits: ["addToCart"],
-  methods: {},
-};
-</script>
-
 <style lang="scss" scoped>
 /* other */
 * {
-  padding: 0;
-  margin: 0;
-
   --item-border: 1px solid rgb(187, 187, 187);
   --green-color: #27a92c;
 }
@@ -122,6 +117,10 @@ export default {
   font-weight: 600;
   color: var(--grey-text);
   margin-bottom: 0.5em;
+  cursor: pointer;
+  &:hover {
+    color: var(--green-color);
+  }
 }
 
 .product-subtitle {

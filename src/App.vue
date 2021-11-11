@@ -1,30 +1,3 @@
-<template>
-  <navbar
-    :cart="cart"
-    :currentLang="currentLang"
-    @removeFromCart="removeFromCart"
-    @order="changeView('callback-form')"
-    @home-btn="changeView('main-content')"
-    @changeLang="changeLang"
-    @changeQuantity="changeQuantity"
-  />
-  <main-layout
-    :products="products"
-    :cart="cart"
-    :currentLang="currentLang"
-    :currentComponent="currentComponent"
-    @clear-cart="clearCart"
-    @addToCart="addToCart"
-    @home-btn="changeView('main-content')"
-    @modal-window="changeView('modal-window')"
-    @reset-quantity="resetQuantity"
-    @removeFromCart="removeFromCart"
-    @changeQuantity="changeQuantity"
-  />
-
-  <footer-comp :currentLang="currentLang" />
-</template>
-
 <script>
 import Navbar from "@/components/Navbar.vue";
 import FooterComp from "@/components/FooterComp.vue";
@@ -96,11 +69,43 @@ export default {
 };
 </script>
 
+<template>
+  <navbar
+    :cart="cart"
+    :currentLang="currentLang"
+    @removeFromCart="removeFromCart"
+    @order="changeView('callback-form')"
+    @home-btn="changeView('main-content')"
+    @changeLang="changeLang"
+    @changeQuantity="changeQuantity"
+  />
+  <main-layout
+    :products="products"
+    :cart="cart"
+    :currentLang="currentLang"
+    :currentComponent="currentComponent"
+    @clear-cart="clearCart"
+    @addToCart="addToCart"
+    @home-btn="changeView('main-content')"
+    @modal-window="changeView('modal-window')"
+    @reset-quantity="resetQuantity"
+    @removeFromCart="removeFromCart"
+    @changeQuantity="changeQuantity"
+  />
+
+  <footer-comp :currentLang="currentLang" />
+</template>
+
 <style>
 /*variables*/
 
 * {
+  padding: 0;
+  margin: 0;
+
   --accent-color: rgb(231, 162, 33);
+  --accent-green: #27a92c;
+
   --grey-border: 1px solid #d7d7d7;
 
   --modal-shadow: 1px 1px 5px #b7b7b7;
