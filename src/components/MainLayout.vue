@@ -3,6 +3,7 @@ import MainContent from "@/components/MainContent.vue";
 import CallbackForm from "@/components/CallbackForm.vue";
 import ModalWindow from "@/components/ModalWindow.vue";
 import ModalPopup from "@/components/ModalPopup.vue";
+import Gallery from "@/components/Gallery.vue";
 
 export default {
   components: {
@@ -10,6 +11,7 @@ export default {
     CallbackForm,
     ModalWindow,
     ModalPopup,
+    Gallery,
   },
   props: ["products", "cart", "currentLang", "currentComponent"],
   emits: [
@@ -24,17 +26,10 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      enlargedPicture: "",
-      // modalName: "",
-      // modalHeader: "",
-      // modalBody: "",
-      // modalFooter: "",
+      modalGallery: "",
     };
   },
   methods: {
-    enlargeThumbnail(pic) {
-      this.enlargedPicture = pic;
-    },
     closeModal() {
       this.isModalVisible = false;
     },
@@ -85,23 +80,7 @@ export default {
     <ModalPopup v-if="isModalVisible" @close="closeModal">
       <template v-slot:name>{{ this.modalName }}</template>
       <template v-slot:gallery>
-        <div class="gallery-enlarged">
-          <img :src="require('../assets/images/' + this.enlargedPicture)" />
-        </div>
-        <div class="gallery-thumbnails">
-          <div
-            v-for="(picture, index) in this.modalGallery"
-            :key="index"
-            class="gallery-inner"
-          >
-            <img
-              class="thumbnail"
-              :src="require('../assets/images/' + picture)"
-              alt=""
-              @click="enlargeThumbnail(picture)"
-            />
-          </div>
-        </div>
+        <Gallery :modalGallery="modalGallery" />
       </template>
       <template v-slot:desc>{{ this.modalDesc }}</template>
       <template v-slot:props>{{ this.modalProps }}</template>
