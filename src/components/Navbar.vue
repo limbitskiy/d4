@@ -1,52 +1,3 @@
-<template>
-  <div class="navbar">
-    <div class="container nav">
-      <img class="logo" src="@/assets/images/logo.webp" />
-      <div class="nav-btn-group">
-        <i class="fa fa-mobile" aria-hidden="true"
-          ><span>+38 (050) 340-35-47</span></i
-        >
-
-        <a href="tel:+38 (050) 340-35-47">
-          <i class="fa fa-mobile" aria-hidden="true"></i>
-        </a>
-
-        <nav-btn :class="{ 'btn-orange': cart.length > 0 }" @click="openCart">
-          <i class="fas fa-shopping-cart"></i>
-        </nav-btn>
-
-        <nav-btn @click="homeBtn">
-          <i class="fas fa-home"></i>
-        </nav-btn>
-
-        <div class="lang-module">
-          <span @click="this.$emit('changeLang', 0)">рус</span>
-          <span @click="this.$emit('changeLang', 1)">укр</span>
-        </div>
-      </div>
-
-      <transition name="slide-out">
-        <Dropdown v-if="cartOpen">
-          <template v-slot:cart-body>
-            <Cart
-              :cart="cart"
-              :cartOpen="cartOpen"
-              :currentLang="currentLang"
-              @removeFromCart="this.$emit('removeFromCart', $event)"
-              @changeQuantity="this.$emit('changeQuantity', $event)"
-            />
-          </template>
-          <template v-slot:cart-btn>
-            <gen-btn v-if="this.cart.length > 0" @click="order">
-              {{ this.translation[this.currentLang].orderTitle }}
-            </gen-btn>
-          </template>
-        </Dropdown>
-      </transition>
-    </div>
-  </div>
-</template>
-
 <script>
 import { translationsArray } from "@/language/Navbar.js";
 import Cart from "@/components/Cart.vue";
@@ -105,6 +56,55 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="navbar">
+    <div class="container nav">
+      <img class="logo" src="/images/logo.webp" />
+      <div class="nav-btn-group">
+        <i class="fa fa-mobile" aria-hidden="true"
+          ><span>+38 (050) 340-35-47</span></i
+        >
+
+        <a href="tel:+38 (050) 340-35-47">
+          <i class="fa fa-mobile" aria-hidden="true"></i>
+        </a>
+
+        <nav-btn :class="{ 'btn-active': cart.length > 0 }" @click="openCart">
+          <i class="fas fa-shopping-cart"></i>
+        </nav-btn>
+
+        <nav-btn @click="homeBtn">
+          <i class="fas fa-home"></i>
+        </nav-btn>
+
+        <div class="lang-module">
+          <span @click="this.$emit('changeLang', 0)">рус</span>
+          <span @click="this.$emit('changeLang', 1)">укр</span>
+        </div>
+      </div>
+
+      <transition name="slide-out">
+        <Dropdown v-if="cartOpen">
+          <template v-slot:cart-body>
+            <Cart
+              :cart="cart"
+              :cartOpen="cartOpen"
+              :currentLang="currentLang"
+              @removeFromCart="this.$emit('removeFromCart', $event)"
+              @changeQuantity="this.$emit('changeQuantity', $event)"
+            />
+          </template>
+          <template v-slot:cart-btn>
+            <gen-btn v-if="this.cart.length > 0" @click="order">
+              {{ this.translation[this.currentLang].orderTitle }}
+            </gen-btn>
+          </template>
+        </Dropdown>
+      </transition>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 /* other */

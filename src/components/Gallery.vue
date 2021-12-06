@@ -5,15 +5,16 @@ export default {
   data() {
     return {
       enlargedPicture: this.modalGallery[0],
-      // modalName: "",
-      // modalHeader: "",
-      // modalBody: "",
-      // modalFooter: "",
     };
   },
   methods: {
     enlargeThumbnail(pic) {
-      this.enlargedPicture = pic;
+      const currentPic = document.querySelector(".gallery-enlarged>img");
+      setTimeout(() => {
+        this.enlargedPicture = pic;
+        currentPic.classList.toggle("fade");
+      }, 300);
+      currentPic.classList.toggle("fade");
     },
   },
 };
@@ -21,7 +22,7 @@ export default {
 
 <template>
   <div class="gallery-enlarged">
-    <img :src="require('../assets/images/' + this.enlargedPicture)" />
+    <img :src="'/images/' + this.enlargedPicture" />
   </div>
   <div class="gallery-thumbnails">
     <div
@@ -31,7 +32,7 @@ export default {
     >
       <img
         class="thumbnail"
-        :src="require('../assets/images/' + picture)"
+        :src="'/images/' + picture"
         alt=""
         @click="enlargeThumbnail(picture)"
       />
@@ -40,6 +41,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.fade {
+  opacity: 0;
+}
+
 .gallery-thumbnails {
   display: grid;
   gap: 5px;
@@ -49,11 +54,22 @@ export default {
 .gallery-enlarged {
   display: grid;
   place-items: center;
+
+  img {
+    transition: opacity 0.3s ease;
+  }
 }
 
 .thumbnail {
   width: 100%;
+  border-radius: 0.3rem;
   border: 1px solid rgb(221, 221, 221);
   cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    opacity: 0.5;
+    border-color: var(--accent-green);
+  }
 }
 </style>

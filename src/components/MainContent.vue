@@ -21,12 +21,12 @@ export default {
       <div class="cta">
         <h1>
           {{ this.translation[this.currentLang].ctaTitle }}
-          <br />
-          <span>{{ this.translation[this.currentLang].ctaSubTitle }}</span>
         </h1>
+        <span>{{ this.translation[this.currentLang].ctaSubTitle }}</span>
       </div>
-      <img src="@/assets/images/jumbotron1.png" />
+      <img src="/images/jumbotron.png" />
     </div>
+    <h3 class="subtitle">Каталог</h3>
     <catalog
       :products="products"
       :currentLang="currentLang"
@@ -41,7 +41,7 @@ export default {
         <p>
           {{ this.translation[this.currentLang].aboutBody }}
         </p>
-        <img src="@/assets/images/about.jpg" alt="" />
+        <img src="/images/about.jpg" alt="" />
       </div>
     </section>
     <section class="why-us">
@@ -50,7 +50,7 @@ export default {
       </h3>
       <div class="why-us-items">
         <div class="why-us-item">
-          <img src="@/assets/images/factory.svg" alt="" />
+          <img src="/images/factory.svg" alt="" />
           <div class="why-us-desc">
             {{ this.translation[this.currentLang].whyUsOneTitle }}<br />
             <span>{{ this.translation[this.currentLang].whyUsOneDesc }}</span>
@@ -58,7 +58,7 @@ export default {
         </div>
 
         <div class="why-us-item">
-          <img src="@/assets/images/thumb.png" alt="" />
+          <img src="/images/thumb.png" alt="" />
           <div class="why-us-desc">
             {{ this.translation[this.currentLang].whyUsTwoTitle }}<br />
             <span>{{ this.translation[this.currentLang].whyUsTwoDesc }}</span>
@@ -66,7 +66,7 @@ export default {
         </div>
 
         <div class="why-us-item">
-          <img src="@/assets/images/cash.png" alt="" />
+          <img src="/images/cash.png" alt="" />
           <div class="why-us-desc">
             {{ this.translation[this.currentLang].whyUsThreeTitle }}<br />
             <span>{{ this.translation[this.currentLang].whyUsThreeDesc }}</span>
@@ -74,7 +74,7 @@ export default {
         </div>
 
         <div class="why-us-item">
-          <img src="@/assets/images/flask.png" alt="" />
+          <img src="/images/flask.png" alt="" />
           <div class="why-us-desc">
             {{ this.translation[this.currentLang].whyUsFourTitle }}<br />
             <span>{{ this.translation[this.currentLang].whyUsFourDesc }}</span>
@@ -106,12 +106,23 @@ section {
 }
 
 .subtitle {
-  font-family: "Ubuntu", sans-serif;
   text-align: center;
   margin-bottom: 1.2em;
-  font-weight: 400;
-  font-size: 36px;
+  font-weight: 500;
+  font-size: 2.3rem;
   color: var(--grey-text);
+  position: relative;
+
+  &:after {
+    content: "";
+    width: 8rem;
+    height: 3px;
+    background-color: var(--grey-text);
+    position: absolute;
+    bottom: -0.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 /* jumbotron */
@@ -119,12 +130,17 @@ section {
 .jumbotron {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  justify-items: center;
+  place-items: center;
+  gap: 4rem;
   padding-top: 80px;
 
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 0.5rem;
+  }
+
   span {
-    font-size: 22px;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
     font-weight: 400;
   }
 
@@ -217,10 +233,6 @@ section {
     grid-template-columns: 1fr;
     padding-top: 180px;
     padding-bottom: 140px;
-
-    h1 {
-      font-size: 28px;
-    }
 
     img {
       display: none;

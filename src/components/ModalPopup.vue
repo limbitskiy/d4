@@ -5,13 +5,18 @@ export default {
     close() {
       this.$emit("close");
     },
+    getClickTarget(e) {
+      if (e.srcElement.classList.contains("modal-backdrop")) {
+        this.$emit("close");
+      }
+    },
   },
 };
 </script>
 
 <template>
   <transition name="modal-fade">
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" @click="getClickTarget">
       <div
         class="modal"
         role="dialog"
@@ -57,16 +62,22 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.596);
   display: grid;
-  place-items: center;
 }
 
 .modal {
   background: #ffffff;
-  box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
-  margin: 0 3em;
+  margin: 50px 0;
+  padding: 1rem;
+  height: calc(100vh - 50px);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .modal-header {
@@ -79,7 +90,6 @@ export default {
 
 .modal-body {
   display: grid;
-  grid-template-columns: 1fr 2fr;
 }
 
 .modal-header,
@@ -109,11 +119,10 @@ export default {
   top: 0;
   right: 0;
   border: none;
-  font-size: 20px;
+  font-size: 1.7rem;
   padding: 0 5px;
   cursor: pointer;
   font-weight: bold;
-  padding: 3px 5px;
   color: var(--grey-general);
   background: transparent;
   &:hover {
@@ -136,5 +145,28 @@ export default {
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity 0.5s ease;
+}
+
+@media (min-width: 450px) {
+  .modal {
+    box-shadow: 2px 2px 20px 3px rgb(0 0 0 / 30%);
+    margin-inline: 10%;
+  }
+}
+
+@media (min-width: 850px) {
+  .modal-backdrop {
+    place-items: center;
+  }
+
+  .modal {
+    border-radius: 1rem;
+
+    height: auto;
+  }
+
+  .modal-body {
+    grid-template-columns: 1fr 2fr;
+  }
 }
 </style>

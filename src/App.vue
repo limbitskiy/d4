@@ -2,7 +2,7 @@
 import Navbar from "@/components/Navbar.vue";
 import FooterComp from "@/components/FooterComp.vue";
 import MainLayout from "@/components/MainLayout.vue";
-import products from "@/products.json";
+// import products from "../public/products.json";
 
 export default {
   name: "App",
@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      products: products,
+      products: [],
       cart: [],
       currentLang: 0,
       currentComponent: "main-content",
@@ -57,15 +57,15 @@ export default {
       });
     },
   },
-  mounted() {
-    // console.log(Object.entries(this.products[0].price)[0][0]);
-  },
-  // async mounted() {
-  //   const res = await fetch("./products.json");
-  //   const data = await res.json();
-  //   this.products = data;
-  //   console.log(this.products);
+  // mounted() {
+
   // },
+  async mounted() {
+    const res = await fetch("../products.json");
+    const data = await res.json();
+    this.products = data;
+    console.log(this.products);
+  },
 };
 </script>
 
@@ -123,7 +123,8 @@ export default {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: rgb(80, 80, 80);

@@ -29,7 +29,7 @@ export default {
     padding: 5px;
     text-align: left;
     font-weight: normal;
-    background: #f6f6f6;
+    background: #e5e2e2;
   }
   td {
     width: 50%;

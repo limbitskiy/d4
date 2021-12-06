@@ -15,13 +15,19 @@ export default {
 
 <template>
   <section class="product-catalog">
-    <h3 class="subtitle">Каталог</h3>
     <div class="catalog">
       <div v-for="product in products" :key="product.id" class="product-card">
-        <img :src="require('../assets/images/' + product.image)" alt="" />
+        <img
+          :src="'/images/' + product.image"
+          alt=""
+          @click="this.$emit('openModalPopup', product)"
+        />
         <h3 class="product-name" @click="this.$emit('openModalPopup', product)">
           {{ product.name[currentLang] }}
         </h3>
+        <!-- <h3 class="product-name">
+          {{ product.name[currentLang] }}
+        </h3> -->
         <div class="packing-wrap">
           <span class="product-subtitle">{{
             this.translation[this.currentLang].packing
@@ -71,15 +77,6 @@ export default {
   --green-color: #27a92c;
 }
 
-.subtitle {
-  font-family: "Ubuntu", sans-serif;
-  text-align: center;
-  margin-bottom: 1.2em;
-  font-weight: 400;
-  font-size: 36px;
-  color: var(--grey-text);
-}
-
 /* product card */
 
 .product-catalog {
@@ -100,26 +97,58 @@ export default {
   grid-template-rows: 250px 1fr 1fr 1fr auto 2fr;
   grid-gap: 0.5em;
   align-items: center;
-  border: var(--item-border);
-  border-radius: 5px;
+  border: 1px solid transparent;
+  border-radius: 0.6rem;
   padding: 1.2em;
   background-color: #fff;
   user-select: none;
   -moz-user-select: none;
+  transition: border-color 0.4s ease-in-out;
+
+  &:hover {
+    border-color: var(--green-color);
+  }
+
+  &:hover .product-name {
+    color: white;
+  }
+
+  &:hover .product-name:before {
+    transform: scaleX(1);
+  }
 
   & img,
   & button {
     justify-self: center;
   }
+
+  img {
+    cursor: pointer;
+  }
 }
 
 .product-name {
   font-weight: 600;
-  color: var(--grey-text);
+  color: var(--green-color);
   margin-bottom: 0.5em;
   cursor: pointer;
-  &:hover {
-    color: var(--green-color);
+  transition: color 0.4s ease-in-out;
+  position: relative;
+  z-index: 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    bottom: -5px;
+    left: -10px;
+    right: -10px;
+    background-color: var(--green-color);
+    z-index: -1;
+    border-radius: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: all 0.3s ease;
   }
 }
 
@@ -159,8 +188,11 @@ export default {
 
 @media screen and (max-width: 800px) {
   .catalog {
-    grid-template-columns: 320px;
+    grid-template-columns: 95%;
+  }
+
+  .product-card {
+    border-color: var(--green-color);
   }
 }
 </style>
-

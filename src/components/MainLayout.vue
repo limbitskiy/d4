@@ -35,13 +35,19 @@ export default {
   methods: {
     closeModal() {
       this.isModalVisible = false;
+      window.onscroll = function () {};
     },
     openModalPopup(prod) {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollLeft = document.documentElement.scrollLeft;
+      window.onscroll = () => {
+        window.scrollTo(scrollLeft, scrollTop);
+      };
       this.modalName = prod.name[this.currentLang];
       this.modalGallery = prod.gallery;
       this.enlargedPicture = this.modalGallery[0];
       this.modalProps = prod.props;
-      this.modalDesc = prod.fullDesc;
+      this.modalDesc = prod.fullDesc[this.currentLang];
       this.isModalVisible = true;
     },
   },

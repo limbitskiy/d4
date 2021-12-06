@@ -3,6 +3,7 @@
     <div class="footer-inner">
       <div class="footer-contacts">
         <p class="footer-subtitle">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
           {{ this.translation[this.currentLang].contactsTitle }}
         </p>
         <p>{{ this.translation[this.currentLang].contactsBody }}</p>
@@ -10,6 +11,7 @@
 
       <ul class="footer-links">
         <p class="footer-subtitle">
+          <i class="fa fa-link" aria-hidden="true"></i>
           {{ this.translation[this.currentLang].linksTitle }}
         </p>
         <li>
@@ -18,7 +20,7 @@
           }}</a>
         </li>
         <li>
-          <a href="https://himpost.prom.ua/">{{
+          <a href="https://himpost.in.ua/">{{
             this.translation[this.currentLang].linksProm
           }}</a>
         </li>
@@ -37,6 +39,7 @@
 
       <div class="footer-contacts">
         <p class="footer-subtitle">
+          <i class="fas fa-clock"></i>
           {{ this.translation[this.currentLang].linksHoursTitle }}
         </p>
         <p>{{ this.translation[this.currentLang].linksHoursBody }}</p>
@@ -44,6 +47,7 @@
 
       <div class="footer-contacts">
         <p class="footer-subtitle">
+          <i class="fa fa-phone" aria-hidden="true"></i>
           {{ this.translation[this.currentLang].feedbackTitle }}
         </p>
         <p>+38 (050) 340-35-47</p>

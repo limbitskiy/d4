@@ -12,6 +12,10 @@ export default {
 
 <style scoped>
 * {
+  --green-color: #27a92c;
+  --green-lighten: rgb(50, 199, 55);
+  --green-darken: rgb(24, 122, 27);
+
   --orange-btn: rgb(231, 162, 33);
   --orange-btn-darken: rgb(124, 89, 25);
   --orange-btn-lighten: rgb(255, 187, 61);
@@ -28,7 +32,7 @@ button {
   z-index: 3;
   padding: 12px;
   border: none;
-  border-radius: 3px;
+  border-radius: 0.6rem;
   color: #fff;
   background-color: var(--grey-btn);
   transition: background-color 200ms ease-in-out;
@@ -42,15 +46,15 @@ button:active {
   background-color: var(--grey-btn-dark);
 }
 
-button.btn-orange {
-  background-color: var(--orange-btn);
+button.btn-active {
+  background-color: var(--green-color);
 }
 
-button.btn-orange:hover {
-  background-color: var(--orange-btn-lighten);
+button.btn-active:hover {
+  background-color: var(--green-lighten);
 }
 
-button.btn-orange:active {
-  background-color: var(--orange-btn-darken);
+button.btn-active:active {
+  background-color: var(--green-darken);
 }
 </style>

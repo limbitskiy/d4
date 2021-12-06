@@ -20,9 +20,9 @@ export default {
 button {
   cursor: pointer;
   z-index: 3;
-  padding: 1em 2em;
+  padding: 0.8em 2em;
   border: none;
-  border-radius: 3px;
+  border-radius: 0.6rem;
   color: #fff;
   background-color: var(--btn-color);
   transition: background-color 200ms ease-in-out;
