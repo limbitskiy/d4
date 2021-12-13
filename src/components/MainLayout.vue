@@ -5,6 +5,8 @@ import ModalWindow from "@/components/ModalWindow.vue";
 import ModalPopup from "@/components/ModalPopup.vue";
 import Gallery from "@/components/Gallery.vue";
 import PropsTable from "@/components/PropsTable.vue";
+import Related from "@/components/Related.vue";
+import InputBeautifier from "@/components/InputBeautifier.vue";
 
 export default {
   components: {
@@ -14,6 +16,8 @@ export default {
     ModalPopup,
     Gallery,
     PropsTable,
+    Related,
+    InputBeautifier,
   },
   props: ["products", "cart", "currentLang", "currentComponent"],
   emits: [
@@ -28,8 +32,7 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      modalGallery: "",
-      modalProps: "",
+      modalKey: 1,
     };
   },
   methods: {
@@ -45,10 +48,23 @@ export default {
       };
       this.modalName = prod.name[this.currentLang];
       this.modalGallery = prod.gallery;
-      this.enlargedPicture = this.modalGallery[0];
       this.modalProps = prod.props;
       this.modalDesc = prod.fullDesc[this.currentLang];
       this.isModalVisible = true;
+    },
+    switchModalPopup(prod) {
+      // this.closeModal();
+      // setTimeout(() => {
+      //   const modal = document.querySelector(".modal");
+      //   modal.scrollTop = 0;
+      //   this.openModalPopup(prod);
+      // }, 300);
+      this.modalName = prod.name[this.currentLang];
+      this.modalGallery = prod.gallery;
+      this.modalProps = prod.props;
+      this.modalDesc = prod.fullDesc[this.currentLang];
+      this.modalKey++;
+      console.log(this.modalName);
     },
   },
 };
@@ -85,18 +101,27 @@ export default {
     ></modal-window>
   </transition>
 
-  <transition name="component-fade" mode="out-in">
-    <ModalPopup v-if="isModalVisible" @close="closeModal">
-      <template v-slot:name>{{ this.modalName }}</template>
-      <template v-slot:gallery>
-        <Gallery :modalGallery="modalGallery" />
-      </template>
-      <template v-slot:desc>{{ this.modalDesc }}</template>
-      <template v-slot:props>
-        <PropsTable :modalProps="modalProps" />
-      </template>
-    </ModalPopup>
-  </transition>
+  <!-- <transition name="component-fade" mode="out-in"> -->
+  <ModalPopup v-if="isModalVisible" @close="closeModal" :key="modalKey">
+    <template v-slot:name>{{ this.modalName }}</template>
+    <template v-slot:gallery>
+      <Gallery :modalGallery="modalGallery" />
+    </template>
+    <template v-slot:desc>
+      <InputBeautifier :modalDesc="modalDesc" />
+    </template>
+    <template v-slot:props>
+      <PropsTable :modalProps="modalProps" />
+    </template>
+    <template v-slot:related>
+      <Related
+        :products="products"
+        :currentLang="currentLang"
+        @switchModalPopup="switchModalPopup"
+      />
+    </template>
+  </ModalPopup>
+  <!-- </transition> -->
 </template>
 
 <style>

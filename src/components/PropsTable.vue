@@ -35,6 +35,7 @@ export default {
     width: 50%;
     padding: 5px;
     border-top: 1px #e5e5e5 solid;
+    word-break: break-all;
     &:first-child {
       border-right: 1px #e5e5e5 solid;
     }

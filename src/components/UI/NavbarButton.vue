@@ -29,8 +29,9 @@ export default {
 
 button {
   cursor: pointer;
-  z-index: 3;
-  padding: 12px;
+  /* z-index: 3; */
+  width: 2.6rem;
+  height: 2.6rem;
   border: none;
   border-radius: 0.6rem;
   color: #fff;

@@ -2,7 +2,6 @@
 import Navbar from "@/components/Navbar.vue";
 import FooterComp from "@/components/FooterComp.vue";
 import MainLayout from "@/components/MainLayout.vue";
-// import products from "../public/products.json";
 
 export default {
   name: "App",
@@ -21,7 +20,9 @@ export default {
   },
   methods: {
     removeFromCart(product) {
-      this.cart.quantity = 1;
+      // this.cart.quantity = 1;
+      console.log(product);
+      product.quantity = 1;
       this.cart.splice(this.cart.indexOf(product), 1);
     },
     addToCart(product) {
@@ -113,7 +114,7 @@ export default {
 
   --font-small: 0.9em;
   --font-big: 1.25em;
-  --font-bigger: 1.3em;
+  --font-bigger: 1.5em;
   --font-large: 1.8em;
 }
 

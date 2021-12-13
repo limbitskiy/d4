@@ -21,21 +21,23 @@ export default {
 </script>
 
 <template>
-  <div class="gallery-enlarged">
-    <img :src="'/images/' + this.enlargedPicture" />
-  </div>
-  <div class="gallery-thumbnails">
-    <div
-      v-for="(picture, index) in this.modalGallery"
-      :key="index"
-      class="gallery-inner"
-    >
-      <img
-        class="thumbnail"
-        :src="'/images/' + picture"
-        alt=""
-        @click="enlargeThumbnail(picture)"
-      />
+  <div class="gallery">
+    <div class="gallery-enlarged">
+      <img :src="'/images/' + this.enlargedPicture" />
+    </div>
+    <div class="gallery-thumbnails">
+      <div
+        v-for="(picture, index) in this.modalGallery"
+        :key="index"
+        class="gallery-inner"
+      >
+        <img
+          class="thumbnail"
+          :src="'/images/' + picture"
+          alt=""
+          @click="enlargeThumbnail(picture)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -45,10 +47,23 @@ export default {
   opacity: 0;
 }
 
+.gallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2rem;
+}
+
 .gallery-thumbnails {
-  display: grid;
-  gap: 5px;
-  grid-auto-flow: column;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+
+  .gallery-inner {
+    height: 5rem;
+    width: 5rem;
+    object-fit: cover;
+  }
 }
 
 .gallery-enlarged {
@@ -56,20 +71,25 @@ export default {
   place-items: center;
 
   img {
+    width: 90%;
+    height: auto;
+    max-height: 25rem;
+    object-fit: contain;
     transition: opacity 0.3s ease;
   }
 }
 
 .thumbnail {
   width: 100%;
+  height: 5rem;
   border-radius: 0.3rem;
   border: 1px solid rgb(221, 221, 221);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
 
   &:hover {
     opacity: 0.5;
-    border-color: var(--accent-green);
   }
 }
 </style>

@@ -23,32 +23,28 @@ export default {
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
       >
-        <header class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          @click="close"
+          aria-label="Close modal"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-title">
           <slot name="name">Default product name</slot>
-          <button
-            type="button"
-            class="btn-close"
-            @click="close"
-            aria-label="Close modal"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </header>
-
-        <div class="modal-body">
-          <div class="gallery">
-            <slot name="gallery"></slot>
-          </div>
-
-          <div class="modal-text">
-            <div class="desc">
-              <slot name="desc"> This is the default full description </slot>
-            </div>
-
-            <div class="props">
-              <slot name="props">These are the default props </slot>
-            </div>
-          </div>
+        </div>
+        <div class="modal-gallery">
+          <slot name="gallery"></slot>
+        </div>
+        <div class="modal-desc">
+          <slot name="desc"> This is the default full description</slot>
+        </div>
+        <div class="modal-props">
+          <slot name="props">These are the default props</slot>
+        </div>
+        <div class="modal-related">
+          <slot name="related">These are the default related products</slot>
         </div>
       </div>
     </div>
@@ -56,70 +52,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.596);
-  display: grid;
-}
-
-.modal {
-  background: #ffffff;
-  overflow-x: auto;
-  margin: 50px 0;
-  padding: 1rem;
-  height: calc(100vh - 50px);
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.modal-header {
-  font-size: 16px;
-  font-weight: 600;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.modal-body {
-  display: grid;
-}
-
-.modal-header,
-.gallery,
-.desc,
-.props {
-  padding: 1em;
-  display: flex;
-}
-
-.gallery {
-  display: grid;
-  grid-auto-flow: row;
-  grid-template-rows: 2fr 1fr;
-}
-
-.props {
-  flex-direction: column;
-}
-
-.desc {
-  position: relative;
+h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .btn-close {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0.5rem;
+  right: 0.5rem;
   border: none;
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   padding: 0 5px;
   cursor: pointer;
   font-weight: bold;
@@ -130,11 +73,61 @@ export default {
   }
 }
 
-.btn-green {
-  color: white;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
-  border-radius: 2px;
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.65);
+  display: grid;
+}
+
+.modal {
+  display: grid;
+  gap: 1.5rem;
+  grid-template:
+    "title"
+    "gallery"
+    "desc"
+    "props"
+    "related" / 1fr;
+  background: #ffffff;
+  overflow-x: auto;
+  margin-block: 3rem 0;
+  padding: 1rem;
+  position: relative;
+  height: auto;
+  // -ms-overflow-style: none; /* IE and Edge */
+  // scrollbar-width: none; /* Firefox */
+
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+}
+
+.modal-title {
+  grid-area: title;
+  font-size: var(--font-big);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.modal-gallery {
+  grid-area: gallery;
+}
+
+.modal-desc {
+  grid-area: desc;
+}
+
+.modal-props {
+  grid-area: props;
+}
+
+.modal-related {
+  grid-area: related;
 }
 
 .modal-fade-enter,
@@ -144,13 +137,14 @@ export default {
 
 .modal-fade-enter-active,
 .modal-fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.1s ease;
 }
 
-@media (min-width: 450px) {
+@media (min-width: 500px) {
   .modal {
     box-shadow: 2px 2px 20px 3px rgb(0 0 0 / 30%);
     margin-inline: 10%;
+    margin-block: 4.2rem 1rem;
   }
 }
 
@@ -160,13 +154,13 @@ export default {
   }
 
   .modal {
-    border-radius: 1rem;
-
-    height: auto;
-  }
-
-  .modal-body {
-    grid-template-columns: 1fr 2fr;
+    grid-template:
+      "title title"
+      "gallery desc"
+      "gallery props"
+      "related related" / 1fr 2fr;
+    max-height: 80vh;
+    width: 90vw;
   }
 }
 </style>

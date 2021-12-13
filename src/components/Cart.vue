@@ -1,3 +1,30 @@
+<script>
+import { translationsArray } from "@/language/Cart.js";
+
+export default {
+  name: "Cart",
+  data() {
+    return {
+      translation: translationsArray,
+    };
+  },
+  props: ["cart", "cartOpen", "currentLang"],
+  emits: ["removeFromCart", "order", "changeQuantity"],
+  methods: {},
+  computed: {
+    total() {
+      return this.cart.reduce((sum, item) => {
+        return (sum += item.price[item.select] * item.quantity);
+      }, 0);
+    },
+    cartLength() {
+      return this.cart.length;
+    },
+  },
+  watch: {},
+};
+</script>
+
 <template>
   <ul class="popup-cart">
     <p v-if="this.cart.length === 0" class="empty-cart-message">
@@ -30,7 +57,7 @@
 
       <div class="popup-item-section">
         <span class="cart-item-price"
-          >{{ product.price[product.select] }}грн</span
+          >{{ product.price[product.select] }} грн</span
         >
       </div>
 
@@ -43,37 +70,10 @@
     </li>
     <p class="total" v-if="this.cart.length > 0">
       {{ this.translation[this.currentLang].totalTitle }}
-      <span>{{ this.total }}</span> грн
+      <span>{{ this.total.toFixed(2) }}</span> грн
     </p>
   </ul>
 </template>
-
-<script>
-import { translationsArray } from "@/language/Cart.js";
-
-export default {
-  name: "Cart",
-  data() {
-    return {
-      translation: translationsArray,
-    };
-  },
-  props: ["cart", "cartOpen", "currentLang"],
-  emits: ["removeFromCart", "order", "changeQuantity"],
-  methods: {},
-  computed: {
-    total() {
-      return this.cart.reduce((sum, item) => {
-        return (sum += item.price[item.select] * item.quantity);
-      }, 0);
-    },
-    cartLength() {
-      return this.cart.length;
-    },
-  },
-  watch: {},
-};
-</script>
 
 <style lang="scss" scoped>
 /* other */
@@ -88,11 +88,17 @@ export default {
   font-size: var(--font-small);
   padding: 5px;
 }
+
+.cart-item-price {
+  display: inline-block;
+  text-align: center;
+}
+
 .popup-cart {
   > li {
     display: grid;
-    grid-template-columns: 0.7fr 2fr 30px 30px 55px 30px;
-    grid-gap: 0.5em;
+    grid-template-columns: 1fr 3fr auto 30px 55px 30px;
+    grid-gap: 1rem;
     justify-items: center;
     align-items: center;
     border-bottom: 1px solid #dad7d7;

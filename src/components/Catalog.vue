@@ -17,17 +17,18 @@ export default {
   <section class="product-catalog">
     <div class="catalog">
       <div v-for="product in products" :key="product.id" class="product-card">
-        <img
-          :src="'/images/' + product.image"
-          alt=""
-          @click="this.$emit('openModalPopup', product)"
-        />
-        <h3 class="product-name" @click="this.$emit('openModalPopup', product)">
-          {{ product.name[currentLang] }}
-        </h3>
-        <!-- <h3 class="product-name">
-          {{ product.name[currentLang] }}
-        </h3> -->
+        <div class="card-header" @click="this.$emit('openModalPopup', product)">
+          <img :src="'/images/' + product.image" alt="" />
+          <h3 class="product-name">
+            {{ product.name[currentLang] }}
+          </h3>
+        </div>
+        <div class="product-desc">
+          <p class="product-subtitle">
+            {{ this.translation[this.currentLang].description }}
+          </p>
+          <p class="product-desc">{{ product.desc[currentLang] }}</p>
+        </div>
         <div class="packing-wrap">
           <span class="product-subtitle">{{
             this.translation[this.currentLang].packing
@@ -41,27 +42,14 @@ export default {
             </select>
           </form>
         </div>
-        <div class="price-wrap">
-          <span class="product-subtitle">{{
-            this.translation[this.currentLang].price
-          }}</span>
-          <span class="product-price"
-            >{{ product.price[product.select] }} грн</span
-          >
-        </div>
-        <div v-if="product.packing.length > 1" class="price-comment">
+        <p class="product-price">₴{{ product.price[product.select] }}</p>
+        <!-- <div v-if="product.packing.length > 1" class="price-comment">
           * {{ this.translation[this.currentLang].comment }}
         </div>
         <div v-if="product.packing.length === 1" class="price-comment">
           * {{ this.translation[this.currentLang].otherComment }}
           {{ product.price[product.select] / 11.1 }} грн
-        </div>
-        <div class="product-desc">
-          <p class="product-subtitle">
-            {{ this.translation[this.currentLang].description }}
-          </p>
-          <p class="product-desc">{{ product.desc[currentLang] }}</p>
-        </div>
+        </div> -->
         <gen-btn @click="this.$emit('addToCart', product)" class="to-cart-btn">
           В корзину
         </gen-btn>
@@ -93,20 +81,17 @@ export default {
 
 .product-card {
   display: grid;
-  grid-auto-flow: row;
-  grid-template-rows: 250px 1fr 1fr 1fr auto 2fr;
-  grid-gap: 0.5em;
-  align-items: center;
+  grid-gap: 1rem;
   border: 1px solid transparent;
   border-radius: 0.6rem;
-  padding: 1.2em;
+  padding: 1.2rem;
   background-color: #fff;
   user-select: none;
   -moz-user-select: none;
-  transition: border-color 0.4s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
-    border-color: var(--green-color);
+    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 30%);
   }
 
   &:hover .product-name {
@@ -116,14 +101,19 @@ export default {
   &:hover .product-name:before {
     transform: scaleX(1);
   }
+}
 
-  & img,
-  & button {
-    justify-self: center;
-  }
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  cursor: pointer;
 
   img {
-    cursor: pointer;
+    height: 200px;
+    width: auto;
+    object-fit: cover;
   }
 }
 
@@ -135,6 +125,7 @@ export default {
   transition: color 0.4s ease-in-out;
   position: relative;
   z-index: 0;
+  align-self: start;
 
   &:before {
     content: "";
@@ -153,6 +144,7 @@ export default {
 }
 
 .product-subtitle {
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -161,12 +153,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px dotted #bebebe;
 }
 
 .product-price {
-  font-size: var(--font-big);
-  color: var(--green-color);
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+  align-self: center;
+  border-radius: 0.5rem;
+  background-color: #dadada;
 }
 
 .price-comment {
@@ -178,6 +174,7 @@ export default {
   background: none;
   outline: none;
   cursor: pointer;
+  font-size: 1.2rem;
 }
 
 @media screen and (max-width: 1200px) {

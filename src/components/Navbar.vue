@@ -36,7 +36,7 @@ export default {
     closeCartTimer() {
       setTimeout(() => {
         this.cartOpen = false;
-      }, 1000);
+      }, 300);
     },
   },
   computed: {
@@ -66,16 +66,17 @@ export default {
           ><span>+38 (050) 340-35-47</span></i
         >
 
-        <a href="tel:+38 (050) 340-35-47">
-          <i class="fa fa-mobile" aria-hidden="true"></i>
-        </a>
+        <a href="tel:+38 (050) 340-35-47"
+          ><nav-btn class="mobile-phone-btn">
+            <i class="fa fa-mobile" aria-hidden="true"></i> </nav-btn
+        ></a>
 
         <nav-btn :class="{ 'btn-active': cart.length > 0 }" @click="openCart">
-          <i class="fas fa-shopping-cart"></i>
+          <i class="fas fa-shopping-cart" aria-hidden="true"></i>
         </nav-btn>
 
         <nav-btn @click="homeBtn">
-          <i class="fas fa-home"></i>
+          <i class="fas fa-home" aria-hidden="true"></i>
         </nav-btn>
 
         <div class="lang-module">
@@ -135,14 +136,11 @@ export default {
 }
 
 .nav-btn-group {
-  display: grid;
-  grid-template-columns: 8fr 50px 50px 50px;
-  grid-auto-flow: column;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-items: center;
-  i {
-    justify-self: end;
-  }
+  gap: 0.5rem;
+
   .fa-mobile > span {
     margin: 0 1em 0 0.5em;
     font-family: "Open Sans", sans-serif;
@@ -156,8 +154,10 @@ export default {
   flex-direction: column;
   color: grey;
   font-size: 0.9em;
+
   span {
     cursor: pointer;
+
     &:hover {
       color: var(--accent-color);
     }
@@ -214,22 +214,24 @@ export default {
     display: none;
   }
 
-  .nav-btn-group > a {
-    display: block;
-    justify-self: end;
-    margin-right: 4px;
-    background-color: grey;
-    padding: 12px 16px;
-    border: none;
-    border-radius: 3px;
-    color: #fff;
-    background-color: var(--grey-btn);
-    transition: background-color 200ms ease-in-out;
+  .nav-btn-group {
+    // > a {
+    //   display: block;
+    //   justify-self: end;
+    //   margin-right: 4px;
+    //   background-color: grey;
+    //   padding: 12px 16px;
+    //   border: none;
+    //   border-radius: 3px;
+    //   color: #fff;
+    //   background-color: var(--grey-btn);
+    //   transition: background-color 200ms ease-in-out;
+    // }
   }
 }
 
 @media screen and (min-width: 500px) {
-  .nav-btn-group > a {
+  .mobile-phone-btn {
     display: none;
   }
 }
