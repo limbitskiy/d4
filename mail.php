@@ -1,6 +1,6 @@
 <?php
 
-$mailTo = 'target@himpost.com, sale@himpost.com, ostraukhova@gmail.com';
+$mailTo = 'target@himpost.com, sale@himpost.com';
 
 $subject = 'Заказ с сайта клея(d4.himpost.com)';
 
@@ -12,7 +12,6 @@ $cart = $_POST['cartData'];
 $total = $_POST['total'];
 $date = date('d/m/Y');
 $time = date('H:i');
-
 
 $message = "Имя заказчика: $name\nТелефон: $tel\nСообщение: $comment\nЗаказ:\n$cart\nСумма заказа: $total грн\nДата заказа: $date\nВремя заказа: $time";
 

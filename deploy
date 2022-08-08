@@ -12,11 +12,20 @@ echo copying additional files...
 echo copying mail.php...
 cp mail.php $remotePath
 
+echo copying refreshData.php...
+cp refreshData.php $remotePath
+
 echo copying orders.txt...
 cp orders.txt $remotePath
 
-echo copying refreshData.php...
-cp refreshData.php $remotePath
+echo copying .htaccess...
+cp .htaccess $remotePath
+
+echo copying feedback.txt
+cp feedback.txt $remotePath
+
+echo copying feedback.php
+cp feedback.php $remotePath
 
 echo copying COMPLETE
 

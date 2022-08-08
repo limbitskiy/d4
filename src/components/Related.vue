@@ -1,36 +1,47 @@
 <script>
-import { translationsArray } from "@/language/Related.js";
-
 export default {
   name: "Related",
-  props: ["products", "currentLang"],
-  emits: ["switchModalPopup"],
-  data() {
-    return {
-      translation: translationsArray,
-    };
+  computed: {
+    filteredProducts() {
+      return this.$store.state.products.filter(
+        (prod) => prod.slug !== this.$route.params.slug
+      );
+    },
   },
-  methods: {},
 };
 </script>
 
 <template>
-  <h2>{{ this.translation[this.currentLang].title }}</h2>
   <div class="related">
-    <div
-      v-for="product in products"
-      :key="product.id"
-      class="related-item"
-      @click="this.$emit('switchModalPopup', product)"
-    >
-      <img :src="'/images/' + product.image" />
-      <span>{{ product.name[currentLang] }}</span>
+    <div class="title-box">
+      <h2 class="section-title">{{ localize.relatedTitle }}</h2>
+    </div>
+    <div class="related-products">
+      <div
+        v-for="product in filteredProducts"
+        :key="product.id"
+        class="related-item"
+      >
+        <router-link
+          :to="{
+            name: 'Product',
+            params: { id: product.id, slug: product.slug },
+          }"
+        >
+          <img :src="'/images/' + product.gallery[0]" />
+          <p>{{ product.name[currentLang] }}</p>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .related {
+  margin-top: 3rem;
+}
+
+.related-products {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -38,29 +49,31 @@ export default {
 }
 
 .related-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // gap: 1rem;
   cursor: pointer;
   text-align: center;
-  padding: 0.5rem 1rem;
-  width: 10rem;
-  border-radius: 0.5rem;
-  transition: box-shadow 0.3s ease;
+  // padding: 0.5rem 1rem;
+  flex-basis: 10rem;
+  // border-radius: 0.5rem;
+  // transition: box-shadow 0.3s ease;
 
   img {
-    height: 10rem;
-    object-fit: contain;
+    object-fit: cover;
+    width: 100%;
+    height: 180px;
   }
 
   &:hover {
-    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 30%);
+    // box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 30%);
   }
 }
 
-h2 {
-  text-align: center;
-  margin-block: 2rem 1rem;
+@media (min-width: 768px) {
+  .related {
+    grid-column: 1/4;
+  }
 }
 </style>

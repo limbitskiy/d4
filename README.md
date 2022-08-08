@@ -1,4 +1,4 @@
-# vue-d4-shop
+# vue_nalivnoy
 
 ## Project setup
 ```

@@ -1,30 +1,38 @@
+<template>
+  <div class="product-props">
+    <h3 class="details-subtitle">Характеристики:</h3>
+    <table class="props-table">
+      <tr v-for="(propkey, propvalue) in product.props" :key="propvalue">
+        <td>{{ propvalue }}</td>
+        <td>{{ propkey }}</td>
+      </tr>
+    </table>
+  </div>
+</template>
+
 <script>
 export default {
   name: "PropsTable",
-  props: ["modalProps"],
+  props: { product: { required: true } },
 };
 </script>
 
-<template>
-  <table class="props-table">
-    <tr>
-      <th colspan="2">Характеристики</th>
-    </tr>
-    <tr v-for="(propkey, propvalue, index) in this.modalProps" :key="index">
-      <td>{{ propvalue }}</td>
-      <td>{{ propkey }}</td>
-    </tr>
-  </table>
-</template>
-
 <style lang="scss" scoped>
-.props-table {
+.product-props {
   font-family: "Noto Sans", Arial, sans-serif;
   font-size: 14px;
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  border: 1px solid #e8e8e8;
+
+  h3 {
+    margin-bottom: 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: 1px solid #e8e8e8;
+  }
+
   th {
     padding: 5px;
     text-align: left;
@@ -33,9 +41,8 @@ export default {
   }
   td {
     width: 50%;
-    padding: 5px;
+    padding: 10px;
     border-top: 1px #e5e5e5 solid;
-    word-break: break-all;
     &:first-child {
       border-right: 1px #e5e5e5 solid;
     }
